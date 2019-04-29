@@ -34,8 +34,10 @@ public class PlayerFragment extends Fragment {
     SimpleExoPlayer sound;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_player, container, false);
-        //TODO (6) : Use getArguments to get position and phrase
-
+        // -- TODO (6) : Use getArguments to get position and phrase
+        Bundle bundle = getArguments();
+        phrase  = bundle.getString("PHRASE-EXTRA");
+        int phrasePosition = bundle.getInt("POSITION-EXTRA");
 
 
         TextView textView =view.findViewById(R.id.phrase);
@@ -90,11 +92,11 @@ public class PlayerFragment extends Fragment {
         public void playSound(String lang){
         Uri uri=Uri.parse(url+lang);
         Log.i("PlayerFragment","Url is :"+url+lang);
-        //TODO (7) : Define SimpleExoPlayer:sound ,TrackSelector and LoadControl
-
-
-
-        String userAgent= Util.getUserAgent(getContext(),"MediaPlayerApp");
+        // -- TODO (7) : Define SimpleExoPlayer:sound ,TrackSelector and LoadControl
+            LoadControl loadControl = new DefaultLoadControl();
+            TrackSelector tk = new DefaultTrackSelector();
+            sound = ExoPlayerFactory.newSimpleInstance(getContext(), tk, loadControl);
+            String userAgent= Util.getUserAgent(getContext(),"MediaPlayerApp");
         MediaSource mediaPlayer =new ExtractorMediaSource(uri,new DefaultDataSourceFactory(getContext(),userAgent)
                 ,new DefaultExtractorsFactory()
                 ,null,null);
@@ -105,7 +107,7 @@ public class PlayerFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //TODO (8) : Release  sound
-
+        // -- TODO (8) : Release  sound
+        sound.release();
     }
 }
