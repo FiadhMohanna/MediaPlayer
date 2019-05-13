@@ -39,8 +39,6 @@ public class MainFragment extends Fragment {
                          .replace(R.id.fragment_frame,playerFragment)
                          .addToBackStack(null)
                          .commit();
-
-
              }
          });
 
